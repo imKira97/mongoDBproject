@@ -21,9 +21,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {
-  User.findById("665deaf12faa9ad47a12aac4")
+  User.findById("665f340df335cfc94df4de59")
     .then((user) => {
-      req.user = user;
+      //here the user is an object all the mtd will not be in there with this user
+      //hence we need a real user object
+      req.user = new User(user.name, user.email, user.cart, user._id);
 
       next();
     })
